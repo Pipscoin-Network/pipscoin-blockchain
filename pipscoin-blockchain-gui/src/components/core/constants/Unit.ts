@@ -1,6 +1,6 @@
 enum Unit {
   PIPSCOIN = 'PIPSCOIN',
-  MOJO = 'MOJO',
+  BYTE = 'BYTE',
   COLOURED_COIN = 'COLOUREDCOIN',
 }
 

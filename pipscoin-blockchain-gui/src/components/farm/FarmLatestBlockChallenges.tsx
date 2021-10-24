@@ -65,12 +65,12 @@ export default function FarmLatestBlockChallenges() {
           *Want to explore Pipscoin’s blocks further? Check out{' '}
           <Link
             color="primary"
-            href="https://pipscoin.posat.io/"
+            href="https://alltheblocks.net/pipscoin"
             target="_blank"
           >
             Pipscoin Explorer
           </Link>{' '}
-          built by that one smart guy on discord.
+          built by an open source developer.
         </Trans>
       </Typography>
     </Card>

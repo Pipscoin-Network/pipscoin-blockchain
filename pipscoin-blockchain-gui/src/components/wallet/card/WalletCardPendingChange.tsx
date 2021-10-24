@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import FarmCard from '../../farm/card/FarmCard';
 import useWallet from '../../../hooks/useWallet';
 import useCurrencyCode from '../../../hooks/useCurrencyCode';
-import { mojo_to_pipscoin_string } from '../../../util/pipscoin';
+import { byte_to_pipscoin_string } from '../../../util/pipscoin';
 
 type Props = {
   wallet_id: number;
@@ -30,7 +30,7 @@ export default function WalletCardPendingChange(props: Props) {
       }
       value={
         <>
-          {mojo_to_pipscoin_string(value)} {currencyCode}
+          {byte_to_pipscoin_string(value)} {currencyCode}
         </>
       }
     />

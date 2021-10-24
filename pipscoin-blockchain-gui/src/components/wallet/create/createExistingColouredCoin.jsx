@@ -19,7 +19,7 @@ import {
   CREATE_CC_WALLET_OPTIONS,
 } from '../../../modules/createWallet';
 import { useStyles } from './WalletCreate';
-import { pipscoin_to_mojo } from '../../../util/pipscoin';
+import { pipscoin_to_byte } from '../../../util/pipscoin';
 import { create_cc_for_colour_action } from '../../../modules/message';
 import { openDialog } from '../../../modules/dialog';
 
@@ -75,7 +75,7 @@ export const CreateExistingCCWallet = () => {
     }
     dispatch(createState(true, true));
     const colour = colour_string.value;
-    const fee = pipscoin_to_mojo(fee_input.value);
+    const fee = pipscoin_to_byte(fee_input.value);
     dispatch(create_cc_for_colour_action(colour, fee));
   }
 

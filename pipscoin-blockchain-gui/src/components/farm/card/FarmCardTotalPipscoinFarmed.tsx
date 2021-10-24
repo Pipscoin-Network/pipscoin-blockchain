@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../modules/rootReducer';
 import FarmCard from './FarmCard';
-import { mojo_to_pipscoin } from '../../../util/pipscoin';
+import { byte_to_pipscoin } from '../../../util/pipscoin';
 import useCurrencyCode from '../../../hooks/useCurrencyCode';
 
 export default function FarmCardTotalPipscoinFarmed() {
@@ -20,7 +20,7 @@ export default function FarmCardTotalPipscoinFarmed() {
   const totalPipscoinFarmed = useMemo(() => {
     if (farmedAmount !== undefined) {
       const val = BigInt(farmedAmount.toString());
-      return mojo_to_pipscoin(val);
+      return byte_to_pipscoin(val);
     }
   }, [farmedAmount]);
 

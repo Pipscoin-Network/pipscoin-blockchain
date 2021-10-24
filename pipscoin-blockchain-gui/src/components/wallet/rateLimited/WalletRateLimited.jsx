@@ -18,7 +18,7 @@ import {
   send_transaction,
   rl_set_user_info_action,
 } from '../../../modules/message';
-import { mojo_to_pipscoin_string, pipscoin_to_mojo } from '../../../util/pipscoin';
+import { byte_to_pipscoin_string, pipscoin_to_byte } from '../../../util/pipscoin';
 import { get_transaction_result } from '../../../util/transaction_result';
 import { openDialog } from '../../../modules/dialog';
 import WalletHistory from '../WalletHistory';
@@ -240,9 +240,9 @@ const IncompleteCard = (props) => {
 
   function submit() {
     const ip_val = ip_input.value;
-    const hepipseck = /[\da-f]+$/gi;
+    const hexcheck = /[\da-f]+$/gi;
 
-    if (!hepipseck.test(ip_val) || ip_val.value === '') {
+    if (!hexcheck.test(ip_val) || ip_val.value === '') {
       dispatch(openDialog('Please enter a valid info packet'));
       return;
     }
@@ -400,7 +400,7 @@ const RLDetailsCard = (props) => {
               <Typography variant="subtitle1">
                 <Trans>
                   Spending Limit (pipscoin per interval):{' '}
-                  {mojo_to_pipscoin_string(limit)}
+                  {byte_to_pipscoin_string(limit)}
                 </Trans>
               </Typography>
             </Box>
@@ -447,7 +447,7 @@ const RLDetailsCard = (props) => {
               <Typography variant="subtitle1">
                 <Trans>
                   Spending Limit (pipscoin per interval):{' '}
-                  {mojo_to_pipscoin_string(limit)}
+                  {byte_to_pipscoin_string(limit)}
                 </Trans>
               </Typography>
             </Box>
@@ -512,7 +512,7 @@ const BalanceCardSubSection = (props) => {
         </Box>
         <Box>
           <Typography variant="subtitle1">
-            {mojo_to_pipscoin_string(props.balance)} {currencyCode}
+            {byte_to_pipscoin_string(props.balance)} {currencyCode}
           </Typography>
         </Box>
       </Box>
@@ -652,8 +652,8 @@ const SendCard = (props) => {
       );
       return;
     }
-    const amount = pipscoin_to_mojo(amount_input.value);
-    const fee = pipscoin_to_mojo(fee_input.value);
+    const amount = pipscoin_to_byte(amount_input.value);
+    const fee = pipscoin_to_byte(fee_input.value);
 
     if (address.startsWith('0x') || address.startsWith('0X')) {
       address = address.slice(2);

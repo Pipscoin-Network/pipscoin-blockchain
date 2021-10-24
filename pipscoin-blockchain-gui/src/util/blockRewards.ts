@@ -1,46 +1,44 @@
 import Big from 'big.js';
 
-const MOJO_PER_PIPSCOIN = Big(1000000000000);
+const BYTE_PER_PIPSCOIN = Big(1000000000000);
 const BLOCKS_PER_YEAR = 1681920;
 
 export function calculatePoolReward(height: number): Big {
-  return Big(0);
-  
   if (height === 0) {
-    return MOJO_PER_PIPSCOIN.times(30000).times(0 / 8);
+    return BYTE_PER_PIPSCOIN.times(21000000).times(7 / 8);
   }
   if (height < 3 * BLOCKS_PER_YEAR) {
-    return MOJO_PER_PIPSCOIN.times(1).times(0 / 8);
+    return BYTE_PER_PIPSCOIN.times(2).times(7 / 8);
   }
   if (height < 6 * BLOCKS_PER_YEAR) {
-    return MOJO_PER_PIPSCOIN.times(.5).times(0 / 8);
+    return BYTE_PER_PIPSCOIN.times(1).times(7 / 8);
   }
   if (height < 9 * BLOCKS_PER_YEAR) {
-    return MOJO_PER_PIPSCOIN.times(0.25).times(0 / 8);
+    return BYTE_PER_PIPSCOIN.times(0.5).times(7 / 8);
   }
   if (height < 12 * BLOCKS_PER_YEAR) {
-    return MOJO_PER_PIPSCOIN.times(0.125).times(0 / 8);
+    return BYTE_PER_PIPSCOIN.times(0.25).times(7 / 8);
   }
 
-  return MOJO_PER_PIPSCOIN.times(0.0625).times(0 / 8);
+  return BYTE_PER_PIPSCOIN.times(0.125).times(7 / 8);
 }
 
 export function calculateBaseFarmerReward(height: number): Big {
   if (height === 0) {
-    return MOJO_PER_PIPSCOIN.times(30000);
+    return BYTE_PER_PIPSCOIN.times(21000000).times(1 / 8);
   }
   if (height < 3 * BLOCKS_PER_YEAR) {
-    return MOJO_PER_PIPSCOIN.times(1);
+    return BYTE_PER_PIPSCOIN.times(2).times(1 / 8);
   }
   if (height < 6 * BLOCKS_PER_YEAR) {
-    return MOJO_PER_PIPSCOIN.times(0.5);
+    return BYTE_PER_PIPSCOIN.times(1).times(1 / 8);
   }
   if (height < 9 * BLOCKS_PER_YEAR) {
-    return MOJO_PER_PIPSCOIN.times(0.25);
+    return BYTE_PER_PIPSCOIN.times(0.5).times(1 / 8);
   }
   if (height < 12 * BLOCKS_PER_YEAR) {
-    return MOJO_PER_PIPSCOIN.times(0.125);
+    return BYTE_PER_PIPSCOIN.times(0.25).times(1 / 8);
   }
 
-  return MOJO_PER_PIPSCOIN.times(0.0625);
+  return BYTE_PER_PIPSCOIN.times(0.125).times(1 / 8);
 }

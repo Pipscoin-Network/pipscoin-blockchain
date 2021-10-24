@@ -6,7 +6,7 @@ from clvm_tools import binutils
 from pipscoin.consensus.block_rewards import calculate_base_farmer_reward, calculate_pool_reward
 from pipscoin.rpc.full_node_rpc_client import FullNodeRpcClient
 from pipscoin.types.blockchain_format.program import Program
-from pipscoin.types.coin_solution import CoinSolution
+from pipscoin.types.coin_spend import CoinSpend
 from pipscoin.types.condition_opcodes import ConditionOpcode
 from pipscoin.types.spend_bundle import SpendBundle
 from pipscoin.util.bech32m import decode_puzzle_hash
@@ -18,10 +18,8 @@ from pipscoin.util.ints import uint32, uint16
 
 def print_conditions(spend_bundle: SpendBundle):
     print("\nConditions:")
-    for coin_solution in spend_bundle.coin_solutions:
-        result = Program.from_bytes(bytes(coin_solution.puzzle_reveal)).run(
-            Program.from_bytes(bytes(coin_solution.solution))
-        )
+    for coin_spend in spend_bundle.coin_spends:
+        result = Program.from_bytes(bytes(coin_spend.puzzle_reveal)).run(Program.from_bytes(bytes(coin_spend.solution)))
         error, result_human = parse_sexp_to_conditions(result)
         assert error is None
         assert result_human is not None
@@ -31,7 +29,7 @@ def print_conditions(spend_bundle: SpendBundle):
 
 
 async def main() -> None:
-    rpc_port: uint16 = uint16(8555)
+    rpc_port: uint16 = uint16(18868)
     self_hostname = "localhost"
     path = DEFAULT_ROOT_PATH
     config = load_config(path, "config.yaml")
@@ -45,8 +43,8 @@ async def main() -> None:
         print(farmer_prefarm.amount, farmer_amounts)
         assert farmer_amounts == farmer_prefarm.amount // 2
         assert pool_amounts == pool_prefarm.amount // 2
-        address1 = "pips1rdatypul5c642jkeh4yp933zu3hw8vv8tfup8ta6zfampnyhjnusxdgns6"  # Key 1
-        address2 = "pips1duvy5ur5eyj7lp5geetfg84cj2d7xgpxt7pya3lr2y6ke3696w9qvda66e"  # Key 2
+        address1 = "pips1tm2fmappqenrj3c9ngej8k33pujvspxxea6zpu7p4sx0lvle62es9ae95j"  # Pipscoin Network Inc Reserves Account-1
+        address2 = "pips1tm2fmappqenrj3c9ngej8k33pujvspxxea6zpu7p4sx0lvle62es9ae95j"  # Pipscoin Network Inc Reserves Account-1
 
         ph1 = decode_puzzle_hash(address1)
         ph2 = decode_puzzle_hash(address2)
@@ -60,13 +58,13 @@ async def main() -> None:
 
         print(f"Ph1: {ph1.hex()}")
         print(f"Ph2: {ph2.hex()}")
-        assert ph1.hex() == "1b7ab2079fa635554ad9bd4812c622e46ee3b1875a7813afba127bb0cc9794f9"
-        assert ph2.hex() == "6f184a7074c925ef8688ce56941eb8929be320265f824ec7e351356cc745d38a"
+        assert ph1.hex() == "bd02ce270f62bcaa7ed377cbfb98ee4fa5bebfbead539a3c548de464a2e71af2"
+        assert ph2.hex() == "bd02ce270f62bcaa7ed377cbfb98ee4fa5bebfbead539a3c548de464a2e71af2"
 
         p_solution = Program.to(binutils.assemble("()"))
 
-        sb_farmer = SpendBundle([CoinSolution(farmer_prefarm, p_farmer_2, p_solution)], G2Element())
-        sb_pool = SpendBundle([CoinSolution(pool_prefarm, p_pool_2, p_solution)], G2Element())
+        sb_farmer = SpendBundle([CoinSpend(farmer_prefarm, p_farmer_2, p_solution)], G2Element())
+        sb_pool = SpendBundle([CoinSpend(pool_prefarm, p_pool_2, p_solution)], G2Element())
 
         print("\n\n\nConditions")
         print_conditions(sb_pool)

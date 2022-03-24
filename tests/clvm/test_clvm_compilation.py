@@ -8,12 +8,10 @@ from pipscoin.types.blockchain_format.program import Program, SerializedProgram
 wallet_program_files = set(
     [
         "pipscoin/wallet/puzzles/calculate_synthetic_public_key.clvm",
-        "pipscoin/wallet/puzzles/cc.clvm",
-        "pipscoin/wallet/puzzles/chialisp_deserialisation.clvm",
+        "pipscoin/wallet/puzzles/cat.clvm",
+        "pipscoin/wallet/puzzles/pipscoinlisp_deserialisation.clvm",
         "pipscoin/wallet/puzzles/rom_bootstrap_generator.clvm",
         "pipscoin/wallet/puzzles/generator_for_single_coin.clvm",
-        "pipscoin/wallet/puzzles/genesis-by-coin-id-with-0.clvm",
-        "pipscoin/wallet/puzzles/genesis-by-puzzle-hash-with-0.clvm",
         "pipscoin/wallet/puzzles/lock.inner.puzzle.clvm",
         "pipscoin/wallet/puzzles/p2_conditions.clvm",
         "pipscoin/wallet/puzzles/p2_delegated_conditions.clvm",
@@ -37,6 +35,14 @@ wallet_program_files = set(
         "pipscoin/wallet/puzzles/pool_member_innerpuz.clvm",
         "pipscoin/wallet/puzzles/singleton_launcher.clvm",
         "pipscoin/wallet/puzzles/p2_singleton_or_delayed_puzhash.clvm",
+        "pipscoin/wallet/puzzles/genesis_by_puzzle_hash.clvm",
+        "pipscoin/wallet/puzzles/everything_with_signature.clvm",
+        "pipscoin/wallet/puzzles/delegated_tail.clvm",
+        "pipscoin/wallet/puzzles/settlement_payments.clvm",
+        "pipscoin/wallet/puzzles/genesis_by_coin_id.clvm",
+        "pipscoin/wallet/puzzles/genesis-by-puzzle-hash-with-0.clvm",
+        "pipscoin/wallet/puzzles/delegated_genesis_checker.clvm",
+        "pipscoin/wallet/puzzles/genesis-by-coin-id-with-0.clvm",
     ]
 )
 

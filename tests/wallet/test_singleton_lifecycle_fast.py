@@ -9,8 +9,8 @@ from pipscoin.types.announcement import Announcement
 from pipscoin.types.blockchain_format.coin import Coin
 from pipscoin.types.blockchain_format.sized_bytes import bytes32
 from pipscoin.types.coin_spend import CoinSpend
+from pipscoin.types.condition_opcodes import ConditionOpcode
 from pipscoin.types.spend_bundle import SpendBundle
-from pipscoin.util.condition_tools import ConditionOpcode
 from pipscoin.util.ints import uint64
 from pipscoin.wallet.puzzles.load_clvm import load_clvm
 
@@ -120,7 +120,7 @@ def solve_anyone_can_spend_with_padding(
 def solve_singleton(solver: Solver, puzzle_db: PuzzleDB, args: List[Program], kwargs: Dict) -> Program:
     """
     `lineage_proof`: a `Program` that proves the parent is also a singleton (or the launcher).
-    `coin_amount`: a necessarily-odd value of bytes in this coin.
+    `coin_amount`: a necessarily-odd value of mojos in this coin.
     """
     singleton_struct, inner_puzzle = args
     inner_solution = solver.solve(puzzle_db, inner_puzzle, **kwargs)
@@ -298,11 +298,11 @@ def launcher_conditions_and_spend_bundle(
     return launcher_coin.name(), expected_conditions, spend_bundle
 
 
-def singleton_puzzle(launcher_id: Program, launcher_puzzle_hash: bytes32, inner_puzzle: Program) -> Program:
+def singleton_puzzle(launcher_id: bytes32, launcher_puzzle_hash: bytes32, inner_puzzle: Program) -> Program:
     return SINGLETON_MOD.curry((SINGLETON_MOD_HASH, (launcher_id, launcher_puzzle_hash)), inner_puzzle)
 
 
-def singleton_puzzle_hash(launcher_id: Program, launcher_puzzle_hash: bytes32, inner_puzzle: Program) -> bytes32:
+def singleton_puzzle_hash(launcher_id: bytes32, launcher_puzzle_hash: bytes32, inner_puzzle: Program) -> bytes32:
     return singleton_puzzle(launcher_id, launcher_puzzle_hash, inner_puzzle).get_tree_hash()
 
 

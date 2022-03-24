@@ -8,9 +8,9 @@ from pipscoin.types.blockchain_format.program import Program
 from pipscoin.types.blockchain_format.sized_bytes import bytes32
 from pipscoin.types.blockchain_format.coin import Coin
 from pipscoin.types.coin_spend import CoinSpend
+from pipscoin.types.condition_opcodes import ConditionOpcode
 from pipscoin.types.spend_bundle import SpendBundle
 from pipscoin.util.errors import Err
-from pipscoin.util.condition_tools import ConditionOpcode
 from pipscoin.util.ints import uint64
 from pipscoin.consensus.default_constants import DEFAULT_CONSTANTS
 from pipscoin.wallet.lineage_proof import LineageProof
@@ -110,7 +110,7 @@ class TestSingleton:
                 )
                 raise AssertionError("This should fail due to an even amount")
             except ValueError as msg:
-                assert str(msg) == "Coin amount cannot be even. Subtract one byte."
+                assert str(msg) == "Coin amount cannot be even. Subtract one mojo."
                 conditions, launcher_coinsol = singleton_top_layer.launch_conditions_and_coinsol(  # noqa
                     starting_coin, adapted_puzzle, comment, START_AMOUNT
                 )

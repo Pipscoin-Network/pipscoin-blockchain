@@ -1,9 +1,9 @@
 import dataclasses
+import logging
 
 from pipscoin.types.blockchain_format.sized_bytes import bytes32
 from pipscoin.util.byte_types import hexstr_to_bytes
 from pipscoin.util.ints import uint8, uint32, uint64, uint128
-import logging
 
 log = logging.getLogger(__name__)
 

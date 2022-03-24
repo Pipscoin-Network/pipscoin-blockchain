@@ -1,0 +1,14 @@
+    - name: Checkout test blocks and plots
+      uses: actions/checkout@v2
+      with:
+        repository: 'Pipscoin-Network/test-cache'
+        path: '.pipscoin'
+        ref: '0.28.0'
+        fetch-depth: 1
+
+    - name: Link home directory
+      run: |
+        cd $HOME
+        ln -s $GITHUB_WORKSPACE/.pipscoin
+        echo "$HOME/.pipscoin"
+        ls -al $HOME/.pipscoin

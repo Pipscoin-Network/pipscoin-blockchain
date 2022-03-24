@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from typing import Any, List
 
+from clvm.casts import int_to_bytes
+
 from pipscoin.types.blockchain_format.sized_bytes import bytes32
-from pipscoin.util.clvm import int_to_bytes
 from pipscoin.util.hash import std_hash
 from pipscoin.util.ints import uint64
 from pipscoin.util.streamable import Streamable, streamable

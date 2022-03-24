@@ -17,15 +17,20 @@ Write-Output "Running 'git submodule update --init --recursive'."
 Write-Output ""
 git submodule update --init --recursive
 
-Set-Location pipscoin-blockchain-gui
+Push-Location
+try {
+    Set-Location pipscoin-blockchain-gui
 
-$ErrorActionPreference = "SilentlyContinue"
-npm install --loglevel=error
-npm audit fix
-npm run build
-py ..\installhelper.py
+    $ErrorActionPreference = "SilentlyContinue"
+    npm install --loglevel=error
+    npm audit fix
+    npm run build
+    py ..\installhelper.py
 
-Write-Output ""
-Write-Output "Pipscoin blockchain Install-gui.ps1 completed."
-Write-Output ""
-Write-Output "Type 'cd pipscoin-blockchain-gui' and then 'npm run electron' to start the GUI."
+    Write-Output ""
+    Write-Output "Pipscoin blockchain Install-gui.ps1 completed."
+    Write-Output ""
+    Write-Output "Type 'cd pipscoin-blockchain-gui' and then 'npm run electron' to start the GUI."
+} finally {
+    Pop-Location
+}

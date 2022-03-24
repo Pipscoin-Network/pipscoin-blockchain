@@ -6,8 +6,8 @@ from blspy import AugSchemeMPL, BasicSchemeMPL, G1Element, G2Element
 from pipscoin.types.blockchain_format.program import Program
 from pipscoin.types.blockchain_format.sized_bytes import bytes32
 from pipscoin.types.coin_spend import CoinSpend
+from pipscoin.types.condition_opcodes import ConditionOpcode
 from pipscoin.types.spend_bundle import SpendBundle
-from pipscoin.util.condition_tools import ConditionOpcode
 from pipscoin.util.hash import std_hash
 from pipscoin.wallet.puzzles import (
     p2_conditions,

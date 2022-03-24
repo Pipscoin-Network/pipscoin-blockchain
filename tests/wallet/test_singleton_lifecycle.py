@@ -10,8 +10,8 @@ from pipscoin.types.announcement import Announcement
 from pipscoin.types.blockchain_format.coin import Coin
 from pipscoin.types.blockchain_format.sized_bytes import bytes32
 from pipscoin.types.coin_spend import CoinSpend
+from pipscoin.types.condition_opcodes import ConditionOpcode
 from pipscoin.types.spend_bundle import SpendBundle
-from pipscoin.util.condition_tools import ConditionOpcode
 
 from pipscoin.util.ints import uint64
 from pipscoin.wallet.puzzles.load_clvm import load_clvm

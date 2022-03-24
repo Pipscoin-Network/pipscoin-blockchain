@@ -5,6 +5,7 @@ import time
 from typing import List
 
 import pytest
+import pytest_asyncio
 
 from pipscoin.full_node.weight_proof import _validate_sub_epoch_summaries
 from pipscoin.protocols import full_node_protocol
@@ -13,7 +14,6 @@ from pipscoin.types.full_block import FullBlock
 from pipscoin.types.peer_info import PeerInfo
 from pipscoin.util.hash import std_hash
 from pipscoin.util.ints import uint16
-from tests.core.fixtures import default_400_blocks, default_1000_blocks, default_10000_blocks, empty_blockchain
 from tests.core.node_height import node_height_exactly, node_height_between
 from tests.setup_nodes import bt, self_hostname, setup_n_nodes, setup_two_nodes, test_constants
 from tests.time_out_assert import time_out_assert
@@ -29,24 +29,24 @@ log = logging.getLogger(__name__)
 
 
 class TestFullSync:
-    @pytest.fixture(scope="function")
-    async def two_nodes(self):
-        async for _ in setup_two_nodes(test_constants):
+    @pytest_asyncio.fixture(scope="function")
+    async def two_nodes(self, db_version):
+        async for _ in setup_two_nodes(test_constants, db_version=db_version):
             yield _
 
-    @pytest.fixture(scope="function")
-    async def three_nodes(self):
-        async for _ in setup_n_nodes(test_constants, 3):
+    @pytest_asyncio.fixture(scope="function")
+    async def three_nodes(self, db_version):
+        async for _ in setup_n_nodes(test_constants, 3, db_version=db_version):
             yield _
 
-    @pytest.fixture(scope="function")
-    async def four_nodes(self):
-        async for _ in setup_n_nodes(test_constants, 4):
+    @pytest_asyncio.fixture(scope="function")
+    async def four_nodes(self, db_version):
+        async for _ in setup_n_nodes(test_constants, 4, db_version=db_version):
             yield _
 
-    @pytest.fixture(scope="function")
-    async def five_nodes(self):
-        async for _ in setup_n_nodes(test_constants, 5):
+    @pytest_asyncio.fixture(scope="function")
+    async def five_nodes(self, db_version):
+        async for _ in setup_n_nodes(test_constants, 5, db_version=db_version):
             yield _
 
     @pytest.mark.asyncio

@@ -10,10 +10,12 @@ SERVICES_FOR_GROUP = {
     "timelord": "pipscoin_timelord_launcher pipscoin_timelord pipscoin_full_node".split(),
     "timelord-only": "pipscoin_timelord".split(),
     "timelord-launcher-only": "pipscoin_timelord_launcher".split(),
-    "wallet": "pipscoin_wallet pipscoin_full_node".split(),
-    "wallet-only": "pipscoin_wallet".split(),
+    "wallet": "pipscoin_wallet".split(),
     "introducer": "pipscoin_introducer".split(),
     "simulator": "pipscoin_full_node_simulator".split(),
+    "crawler": "pipscoin_crawler".split(),
+    "seeder": "pipscoin_crawler pipscoin_seeder".split(),
+    "seeder-only": "pipscoin_seeder".split(),
 }
 
 

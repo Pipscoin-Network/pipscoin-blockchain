@@ -1,8 +1,6 @@
+[submodule "mozilla-ca"]
+	path = mozilla-ca
+	url = https://github.com/Chia-Network/mozilla-ca.git
 [submodule "pipscoin-blockchain-gui"]
 	path = pipscoin-blockchain-gui
 	url = https://github.com/Pipscoin-Network/pipscoin-blockchain-gui.git
-	branch = pools
-[submodule "mozilla-ca"]
-	path = mozilla-ca
-	url = https://github.com/Pipscoin-Network/mozilla-ca.git
-        branch = main

@@ -7,7 +7,7 @@ from pipscoin.types.blockchain_format.program import Program
 from pipscoin.types.blockchain_format.sized_bytes import bytes32
 from pipscoin.types.condition_opcodes import ConditionOpcode
 from pipscoin.util.ints import uint64
-from pipscoin.wallet.chialisp import sexp
+from pipscoin.wallet.pipscoinlisp import sexp
 from pipscoin.wallet.puzzles.load_clvm import load_clvm
 
 RATE_LIMITED_MODE = 1

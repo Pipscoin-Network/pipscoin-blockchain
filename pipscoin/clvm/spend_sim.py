@@ -7,7 +7,7 @@ from pipscoin.types.blockchain_format.coin import Coin
 from pipscoin.types.blockchain_format.program import Program, SerializedProgram
 from pipscoin.util.ints import uint64, uint32
 from pipscoin.util.hash import std_hash
-from pipscoin.util.errors import Err
+from pipscoin.util.errors import Err, ValidationError
 from pipscoin.util.db_wrapper import DBWrapper
 from pipscoin.types.coin_record import CoinRecord
 from pipscoin.types.spend_bundle import SpendBundle
@@ -25,7 +25,7 @@ from pipscoin.consensus.block_rewards import calculate_pool_reward, calculate_ba
 from pipscoin.consensus.cost_calculator import NPCResult
 
 """
-The purpose of this file is to provide a lightweight simulator for the testing of Chialisp smart contracts.
+The purpose of this file is to provide a lightweight simulator for the testing of Pipscoinlisp smart contracts.
 
 The Node object uses actual MempoolManager, Mempool and CoinStore objects, while substituting FullBlock and
 BlockRecord objects for trimmed down versions.
@@ -49,6 +49,7 @@ class SimBlockRecord:
         self.timestamp = timestamp
         self.is_transaction_block = True
         self.header_hash = std_hash(bytes(height))
+        self.prev_transaction_block_hash = std_hash(std_hash(height))
 
 
 class SpendSim:
@@ -78,14 +79,13 @@ class SpendSim:
         await self.connection.close()
 
     async def new_peak(self):
-        await self.mempool_manager.new_peak(self.block_records[-1])
+        await self.mempool_manager.new_peak(self.block_records[-1], [])
 
     def new_coin_record(self, coin: Coin, coinbase=False) -> CoinRecord:
         return CoinRecord(
             coin,
             uint32(self.block_height + 1),
             uint32(0),
-            False,
             coinbase,
             self.timestamp,
         )
@@ -108,7 +108,7 @@ class SpendSim:
             return None
         return simple_solution_generator(bundle)
 
-    async def farm_block(self, puzzle_hash: bytes32 = (b"0" * 32)):
+    async def farm_block(self, puzzle_hash: bytes32 = bytes32(b"0" * 32)):
         # Fees get calculated
         fees = uint64(0)
         if self.mempool_manager.mempool.spends:
@@ -203,9 +203,12 @@ class SimClient:
         self.service = service
 
     async def push_tx(self, spend_bundle: SpendBundle) -> Tuple[MempoolInclusionStatus, Optional[Err]]:
-        cost_result: NPCResult = await self.service.mempool_manager.pre_validate_spendbundle(
-            spend_bundle, spend_bundle.name()
-        )
+        try:
+            cost_result: NPCResult = await self.service.mempool_manager.pre_validate_spendbundle(
+                spend_bundle, None, spend_bundle.name()
+            )
+        except ValidationError as e:
+            return MempoolInclusionStatus.FAILED, e.code
         cost, status, error = await self.service.mempool_manager.add_spendbundle(
             spend_bundle, cost_result, spend_bundle.name()
         )
@@ -213,6 +216,20 @@ class SimClient:
 
     async def get_coin_record_by_name(self, name: bytes32) -> CoinRecord:
         return await self.service.mempool_manager.coin_store.get_coin_record(name)
+
+    async def get_coin_records_by_parent_ids(
+        self,
+        parent_ids: List[bytes32],
+        start_height: Optional[int] = None,
+        end_height: Optional[int] = None,
+        include_spent_coins: bool = False,
+    ) -> List[CoinRecord]:
+        kwargs: Dict[str, Any] = {"include_spent_coins": include_spent_coins, "parent_ids": parent_ids}
+        if start_height is not None:
+            kwargs["start_height"] = start_height
+        if end_height is not None:
+            kwargs["end_height"] = end_height
+        return await self.service.mempool_manager.coin_store.get_coin_records_by_parent_ids(**kwargs)
 
     async def get_coin_records_by_puzzle_hash(
         self,
